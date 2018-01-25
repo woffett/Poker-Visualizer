@@ -10,6 +10,7 @@ class InfoSet():
         self.ID = self.getID(gameFileLine)
         self.player = self.getPlayer()
         self.members = self.getMembers()
+        self.depth = self.getDepth()
         self.parents = set()
         self.children = set()
         self.actions = set()
@@ -49,7 +50,13 @@ class InfoSet():
         for m in members.split(' '):
             result.add(m)
         return result
-        
+
+    def getDepth(self):
+        '''
+        returns the infoset's depth in the game tree
+        NOTE - depth is not for the decision tree
+        '''
+        return self.ID.count('/') - 1
 
     ##### ADD methods for adding data to the infoset #####
 
@@ -71,3 +78,21 @@ class InfoSet():
 
     def __hash__(self):
         return hash(self.ID)
+
+    def toDict(self):
+        '''
+        returns a dictionary that maps string representation of the object
+        attributes to string representations of their values
+        '''
+        res = dict()
+
+        res['ID'] = self.ID
+        res['player'] = self.player
+        res['members'] = ' '.join(list(self.members))
+        res['parents'] = ' '.join(list(self.parents)) if len(self.parents) > 0 else ''
+        res['children'] = ' '.join(list(self.children)) if len(self.children) > 0 else ''
+        res['depth'] = str(self.depth)
+        res['actions'] = ' '.join(list(self.actions))
+
+        return res
+        

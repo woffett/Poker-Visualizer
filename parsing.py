@@ -114,7 +114,6 @@ def process(filename):
             else:
                 p2Sets[curIS.ID] = curIS
 
-
     #  Now the nodes are missing a couple of attributes: parents, children, actions, and probs
     addAllFamily(p1Sets, p2Sets)
     addAllActions(p1Sets,f)
@@ -129,7 +128,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         gameFile = sys.argv[1]
         try:
-            process(gameFile)
+            p1, p2 = process(gameFile)
+            print('Processing successful!')
         except Exception as e:
             print('Failed to process gamefile! Error: ' + str(e))
     else:
