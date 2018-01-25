@@ -23,6 +23,9 @@ def getSearchParam(infoset, parent=False):
         return parentFormat.replace(chanceCards, '([JKQ\?]+?)') + '$'
     else:
         IDFormat = infoset.ID.replace(chanceCards, '([JKQ\?]+?)')
+        #  we also need to make sure that we have the "C" in front for the first chance node
+        if IDFormat[1] != 'C':
+            IDFormat = '/C:' + IDFormat[1:]
         return 'node ' + IDFormat + ' player(.+)actions (.+)'
     
 def addFamily(infoset, parentSets):
@@ -67,18 +70,18 @@ def addActions(infoset, f):
     f.seek(0,0)
 
     searchParam = getSearchParam(infoset)
-    '''
     regex = re.compile(searchParam)
     for line in f:
         matchObj = regex.match(line)
         if matchObj:
             break
-
-    actions = matchObj.groups()[-1]  # obtain the last string + delete the extra '\n'
+    try:
+        actions = matchObj.groups()[-1]  # obtain the last string + delete the extra '\n'
+    except Exception as e:
+        raise Exception('Failed to add action for infoset: %s' % infoset.ID)
     for action in actions.split(' '):
         if action != '':
             infoset.actions.add(action)
-    '''
 
         
 def addAllActions(pInfoSets,f):
