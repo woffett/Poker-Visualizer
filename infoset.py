@@ -11,7 +11,7 @@ class InfoSet():
         self.player = self.getPlayer()
         self.members = self.getMembers()
         self.depth = self.getDepth()
-        self.parents = set()
+        self.parent = self.getParent()
         self.children = set()
         self.actions = set()
         self.probs = dict()
@@ -51,6 +51,18 @@ class InfoSet():
             result.add(m)
         return result
 
+    def getParent(self):
+        '''
+        returns the ID of the infoset's parent node in the decision tree
+        '''
+
+        isRoot = len(self.ID.split('/')) <= 2
+
+        if isRoot:
+            return ''
+        else:
+            return '/'.join(self.ID.split('/')[:-2])
+
     def getDepth(self):
         '''
         returns the infoset's depth in the game tree
@@ -60,11 +72,11 @@ class InfoSet():
 
     ##### ADD methods for adding data to the infoset #####
 
-    def addParent(self,n):
-        self.parents[n.ID] = n
+    def addParent(self, parentID):
+        self.parents.add(parentID)
 
-    def addChildren(self,n):
-        self.children[n.ID] = n
+    def addChildren(self, childID):
+        self.children.add(childID)
 
     def addAction(self,s):
         self.actions.add(s)
@@ -89,7 +101,7 @@ class InfoSet():
         res['ID'] = self.ID
         res['player'] = self.player
         res['members'] = ' '.join(list(self.members))
-        res['parents'] = ' '.join(list(self.parents)) if len(self.parents) > 0 else ''
+        res['parent'] = self.parent
         res['children'] = ' '.join(list(self.children)) if len(self.children) > 0 else ''
         res['depth'] = str(self.depth)
         res['actions'] = ' '.join(list(self.actions))

@@ -2,7 +2,7 @@ import csv
 import sys
 from parsing import process
 
-FIELDNAMES = ['player','ID','depth','actions','members','parents','children']
+FIELDNAMES = ['player','ID','depth','actions','members','parent','children']
 
 def writer(inputFile, outputFile):
     '''

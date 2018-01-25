@@ -11,42 +11,25 @@ def getSearchParam(infoset, parent=False):
         chanceCards = infoset.ID[chancePos-1:chancePos+1]
     else:
         chanceCards = infoset.ID[chancePos:chancePos+2]
-
-    if parent:
-        turns = infoset.ID.split('/')
-        lastMove = turns[-1]
-        parentSet = re.match('(.+):(.+)', lastMove).groups()[0]
-        if parentSet == 'C':  # chance!
-            parentFormat = '/'.join(infoset.ID.split('/')[:-2])
-        else:
-            parentFormat = '/'.join(infoset.ID.split('/')[:-1])
-        return parentFormat.replace(chanceCards, '([JKQ\?]+?)') + '$'
-    else:
-        IDFormat = infoset.ID.replace(chanceCards, '([JKQ\?]+?)')
-        #  we also need to make sure that we have the "C" in front for the first chance node
-        if IDFormat[1] != 'C':
-            IDFormat = '/C:' + IDFormat[1:]
-        return 'node ' + IDFormat + ' player(.+)actions (.+)'
+    IDFormat = infoset.ID.replace(chanceCards, '([JKQ\?]+?)')
+    #  we also need to make sure that we have the "C" in front for the first chance node
+    if IDFormat[1] != 'C':
+        IDFormat = '/C:' + IDFormat[1:]
+    return 'node ' + IDFormat + ' player(.+)actions (.+)'
     
 def addFamily(infoset, parentSets):
     '''
-    add the possible parents of infoset
-    add infoset to the possible children of all of its parents
+    add each infoset to its parent's set of children
     '''
 
     isRoot = len(infoset.ID.split('/')) <= 2
     
     if isRoot:
         return
-
-    searchParam = getSearchParam(infoset, parent=True)
-    regex = re.compile(searchParam)
-    
-    for parentID in parentSets.keys():
-        if regex.match(parentID):
-            infoset.parents.add(parentID)
-            parentSets[parentID].children.add(infoset.ID)
-
+    else:
+        parent = parentSets.get(infoset.parent, None)
+        if parent:
+            parent.addChildren(infoset.ID)
 
 def addAllFamily(p1Sets, p2Sets):
     '''
@@ -55,10 +38,8 @@ def addAllFamily(p1Sets, p2Sets):
 
     for infoset in p1Sets.values():
         addFamily(infoset, p1Sets)
-        addFamily(infoset, p2Sets)
 
     for infoset in p2Sets.values():
-        addFamily(infoset, p1Sets)
         addFamily(infoset, p2Sets)
     
         

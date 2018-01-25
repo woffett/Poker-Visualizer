@@ -1,13 +1,13 @@
-player	ID	depth	actions	members	parents	children
-P1	/C:K?/P1:c/P2:r	2	c f	/C:KJ/P1:c/P2:r /C:KQ/P1:c/P2:r	/C:?J/P1:c /C:?K/P1:c /C:?Q/P1:c	
-P1	/C:K?	0	c r	/C:KQ /C:KJ		/C:?J/P1:r /C:?K/P1:c /C:?Q/P1:c /C:?J/P1:c /C:?K/P1:r /C:?Q/P1:r
-P1	/C:J?/P1:c/P2:r	2	c f	/C:JK/P1:c/P2:r /C:JQ/P1:c/P2:r	/C:?J/P1:c /C:?K/P1:c /C:?Q/P1:c	
-P1	/C:J?	0	c r	/C:JK /C:JQ		/C:?J/P1:r /C:?K/P1:c /C:?Q/P1:c /C:?J/P1:c /C:?K/P1:r /C:?Q/P1:r
-P1	/C:Q?	0	c r	/C:QJ /C:QK		/C:?J/P1:r /C:?K/P1:c /C:?Q/P1:c /C:?J/P1:c /C:?K/P1:r /C:?Q/P1:r
-P1	/C:Q?/P1:c/P2:r	2	c f	/C:QJ/P1:c/P2:r /C:QK/P1:c/P2:r	/C:?J/P1:c /C:?K/P1:c /C:?Q/P1:c	
-P2	/C:?J/P1:r	1	c f	/C:KJ/P1:r /C:QJ/P1:r	/C:Q? /C:K? /C:J?	
-P2	/C:?K/P1:c	1	c r	/C:QK/P1:c /C:JK/P1:c	/C:Q? /C:K? /C:J?	/C:Q?/P1:c/P2:r /C:K?/P1:c/P2:r /C:J?/P1:c/P2:r
-P2	/C:?Q/P1:c	1	c r	/C:JQ/P1:c /C:KQ/P1:c	/C:Q? /C:K? /C:J?	/C:Q?/P1:c/P2:r /C:K?/P1:c/P2:r /C:J?/P1:c/P2:r
-P2	/C:?J/P1:c	1	c r	/C:KJ/P1:c /C:QJ/P1:c	/C:Q? /C:K? /C:J?	/C:Q?/P1:c/P2:r /C:K?/P1:c/P2:r /C:J?/P1:c/P2:r
-P2	/C:?K/P1:r	1	c f	/C:QK/P1:r /C:JK/P1:r	/C:Q? /C:K? /C:J?	
-P2	/C:?Q/P1:r	1	c f	/C:KQ/P1:r /C:JQ/P1:r	/C:Q? /C:K? /C:J?	
+player	ID	depth	actions	members	parent	children
+P1	/C:K?/P1:c/P2:r	2	c f	/C:KJ/P1:c/P2:r /C:KQ/P1:c/P2:r	/C:K?	
+P1	/C:K?	0	c r	/C:KQ /C:KJ		/C:K?/P1:c/P2:r
+P1	/C:J?/P1:c/P2:r	2	c f	/C:JK/P1:c/P2:r /C:JQ/P1:c/P2:r	/C:J?	
+P1	/C:J?	0	c r	/C:JK /C:JQ		/C:J?/P1:c/P2:r
+P1	/C:Q?	0	c r	/C:QJ /C:QK		/C:Q?/P1:c/P2:r
+P1	/C:Q?/P1:c/P2:r	2	c f	/C:QJ/P1:c/P2:r /C:QK/P1:c/P2:r	/C:Q?	
+P2	/C:?J/P1:r	1	c f	/C:KJ/P1:r /C:QJ/P1:r		
+P2	/C:?K/P1:c	1	c r	/C:QK/P1:c /C:JK/P1:c		
+P2	/C:?Q/P1:c	1	c r	/C:JQ/P1:c /C:KQ/P1:c		
+P2	/C:?J/P1:c	1	c r	/C:KJ/P1:c /C:QJ/P1:c		
+P2	/C:?K/P1:r	1	c f	/C:QK/P1:r /C:JK/P1:r		
+P2	/C:?Q/P1:r	1	c f	/C:KQ/P1:r /C:JQ/P1:r		
