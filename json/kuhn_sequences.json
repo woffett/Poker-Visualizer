@@ -1,0 +1,32 @@
+{
+  "player1": [
+    {"sequence_id": 0, "is_empty_sequence": false, "infoset_name": "/C:Q?/P1:c/P2:r", "action_name": "c"},
+    {"sequence_id": 1, "is_empty_sequence": false, "infoset_name": "/C:Q?/P1:c/P2:r", "action_name": "f"},
+    {"sequence_id": 2, "is_empty_sequence": false, "infoset_name": "/C:Q?", "action_name": "c"},
+    {"sequence_id": 3, "is_empty_sequence": false, "infoset_name": "/C:Q?", "action_name": "r"},
+    {"sequence_id": 4, "is_empty_sequence": false, "infoset_name": "/C:K?/P1:c/P2:r", "action_name": "c"},
+    {"sequence_id": 5, "is_empty_sequence": false, "infoset_name": "/C:K?/P1:c/P2:r", "action_name": "f"},
+    {"sequence_id": 6, "is_empty_sequence": false, "infoset_name": "/C:K?", "action_name": "c"},
+    {"sequence_id": 7, "is_empty_sequence": false, "infoset_name": "/C:K?", "action_name": "r"},
+    {"sequence_id": 8, "is_empty_sequence": false, "infoset_name": "/C:J?/P1:c/P2:r", "action_name": "c"},
+    {"sequence_id": 9, "is_empty_sequence": false, "infoset_name": "/C:J?/P1:c/P2:r", "action_name": "f"},
+    {"sequence_id": 10, "is_empty_sequence": false, "infoset_name": "/C:J?", "action_name": "c"},
+    {"sequence_id": 11, "is_empty_sequence": false, "infoset_name": "/C:J?", "action_name": "r"},
+    {"sequence_id": 12, "is_empty_sequence": true, "infoset_name": null, "action_name": null}
+  ],
+  "player2": [
+    {"sequence_id": 0, "is_empty_sequence": false, "infoset_name": "/C:?J/P1:r", "action_name": "c"},
+    {"sequence_id": 1, "is_empty_sequence": false, "infoset_name": "/C:?J/P1:r", "action_name": "f"},
+    {"sequence_id": 2, "is_empty_sequence": false, "infoset_name": "/C:?J/P1:c", "action_name": "c"},
+    {"sequence_id": 3, "is_empty_sequence": false, "infoset_name": "/C:?J/P1:c", "action_name": "r"},
+    {"sequence_id": 4, "is_empty_sequence": false, "infoset_name": "/C:?Q/P1:r", "action_name": "c"},
+    {"sequence_id": 5, "is_empty_sequence": false, "infoset_name": "/C:?Q/P1:r", "action_name": "f"},
+    {"sequence_id": 6, "is_empty_sequence": false, "infoset_name": "/C:?Q/P1:c", "action_name": "c"},
+    {"sequence_id": 7, "is_empty_sequence": false, "infoset_name": "/C:?Q/P1:c", "action_name": "r"},
+    {"sequence_id": 8, "is_empty_sequence": false, "infoset_name": "/C:?K/P1:r", "action_name": "c"},
+    {"sequence_id": 9, "is_empty_sequence": false, "infoset_name": "/C:?K/P1:r", "action_name": "f"},
+    {"sequence_id": 10, "is_empty_sequence": false, "infoset_name": "/C:?K/P1:c", "action_name": "c"},
+    {"sequence_id": 11, "is_empty_sequence": false, "infoset_name": "/C:?K/P1:c", "action_name": "r"},
+    {"sequence_id": 12, "is_empty_sequence": true, "infoset_name": null, "action_name": null}
+  ]
+}
