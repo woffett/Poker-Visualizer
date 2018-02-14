@@ -3,6 +3,8 @@ import re
 import sys
 from infoset import InfoSet, P1, P2
 
+NAN = float('NaN')
+
 def getSearchParam(infoset, parent=False):
 
     chancePos = infoset.name.find('?')
@@ -66,23 +68,28 @@ def addActions(infoset, f):
             infoset.actions.add(action)
 
         
-def addAllActions(pInfoSets,f):
+def addAllActions(pInfoSets,f, actions):
     '''
-    add actions for all the infosets from a game file
+    add actions for all the infosets from a game file, and add them into a set of actions
     '''
 
     for infoset in pInfoSets.values():
         addActions(infoset, f)
+        for action in infoset.actions:
+            actions.add(action)
 
 
 def processInfosets(filename):
     '''
     read all the infosets from a game file
+    returns dictionaries mapping infoset names to infoset objects,
+    and a set of action names
     '''
 
     #  {p1/p2}Nodes are dictionaries mapping InfoSet names to InfoSets
     p1Sets = dict() 
     p2Sets = dict()
+    actions = set()
     
     f = open(filename)
 
@@ -98,12 +105,12 @@ def processInfosets(filename):
 
     #  Now the nodes are missing a couple of attributes: parents, children, actions, and probs
     addAllFamily(p1Sets, p2Sets)
-    addAllActions(p1Sets,f)
-    addAllActions(p2Sets,f)
+    addAllActions(p1Sets,f, actions)
+    addAllActions(p2Sets,f, actions)
 
     f.close()
 
-    return p1Sets, p2Sets
+    return p1Sets, p2Sets, actions
 
 
 def processSeqIDs(p1Sets, p2Sets, seqFilename):
@@ -147,7 +154,7 @@ def alreadyAddedIt(itDict, isDicts):
     randIS = isDicts.values()[0]
     return len(randIS.probs)*10 >= itNumber
 
-def normalize(isDicts):
+def normalize(isDicts, actions):
     '''
     Normalize the probabilities for the last 
     probability distributions added to each infoset
@@ -155,17 +162,21 @@ def normalize(isDicts):
 
     for infoset in isDicts.values():
         lastIt = infoset.probs[-1]
-        total = sum(lastIt.values())
+        total = sum([x for x in lastIt.values()])
         normalized = dict()
         for action, prob in lastIt.items():
-            normalized[action] = prob/total
+                normalized[action] = prob/total
+        for action in actions:
+            if action not in infoset.actions:
+                normalized[action] = -1.0
         infoset.probs[-1] = normalized
     
 
-def addIterate(itDict, isDicts):
+def addIterate(itDict, isDicts, actions):
     '''
     adds the strategy profiles for the iterate represented by itDict
     to the infosets in isDicts
+    for all actions not in the infoset, add them to probs as NaN
     '''
 
     strategies = itDict['strategy']
@@ -176,10 +187,10 @@ def addIterate(itDict, isDicts):
             curIt[action] = strategies[seqID]
         infoset.probs.append(curIt)
 
-    normalize(isDicts)
+    normalize(isDicts, actions)
     
 
-def getData(p1Sets, p2Sets, dataFilename,its=None):
+def getData(p1Sets, p2Sets, actions, dataFilename, its=None):
     '''
     extracts iterate data from dataFilename for the particular player,
     adding it to the infosets in infosetDict
@@ -200,14 +211,14 @@ def getData(p1Sets, p2Sets, dataFilename,its=None):
         curSets = p1Sets if curDict['player_id'] == 1 else p2Sets
         if alreadyAddedIt(curDict,curSets):
             continue
-        addIterate(curDict,curSets)
+        addIterate(curDict,curSets, actions)
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         gameFile = sys.argv[1]
         try:
-            p1, p2 = process(gameFile)
+            p1, p2, actions = process(gameFile)
             print('Processing successful!')
         except Exception as e:
             print('Failed to process gamefile! Error: ' + str(e))
