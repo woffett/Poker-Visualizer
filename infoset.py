@@ -1,3 +1,4 @@
+import math
 import re
 
 P1 = 'P1'
@@ -16,6 +17,7 @@ class InfoSet():
         self.actions = set()
         self.seqIDs = dict()
         self.probs = []
+        self.grad = 0.0
 
 
     ##### GET methods for retrieving info set data #####
@@ -71,6 +73,19 @@ class InfoSet():
         NOTE - depth is not for the decision tree
         '''
         return self.name.count('/') - 1
+
+    def getAvgGrad(self, numIts):
+        '''
+        sets own grad attribute to the highest gradient across
+        its probabilities for the actions at the infoset,
+        between the 0th index and the (numIts)'th index in
+        self.probs
+        '''
+        probDiffs = dict()
+        for a in self.actions:
+            probDiffs[a] = abs(self.probs[0][a] - self.probs[numIts][a])
+
+        self.grad = max(probDiffs.values())
 
     ##### ADD methods for adding data to the infoset #####
 

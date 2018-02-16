@@ -1,9 +1,11 @@
 import json
+import math
 import re
 import sys
 from infoset import InfoSet, P1, P2
 
 NAN = float('NaN')
+GRADIENT_ITS = 1.0/3.0
 
 def getSearchParam(infoset, parent=False):
 
@@ -213,6 +215,8 @@ def getData(p1Sets, p2Sets, actions, dataFilename, its=None):
             continue
         addIterate(curDict,curSets, actions)
 
+    for infs in p1Sets.values():
+        infs.getAvgGrad(min(1, int(math.ceil(GRADIENT_ITS*lim))))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
