@@ -1,0 +1,2 @@
+Finally found a way to compare interactive graphs side-by-side using a
+bokeh server! Time to export and make it fancy :)

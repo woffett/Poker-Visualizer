@@ -1,0 +1,11 @@
+PROGRESS:
+	- Holoview is quite inflexible, unable to nest drop-downs in notebook
+		- Considering possibly nesting multiple holomaps in an exported html, without using a notebook
+	- Sorting is not possible unless you make it a key dimension
+		(better to replace infoset name with gradient?)
+   	- Consider an ndlayout format for small subsets of games?
+		- Again, Holoview doesn't allow nesting with these and HoloMap
+  	- No work on triangle stuff yet (sad face)
+
+- ask about SURF project possibilities (deadline is March 23, should have proposal draft < a week before)
+
