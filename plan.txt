@@ -1,8 +1,0 @@
-Input: (python) game files
-Output: CSV/txt encoding of game (decision tree) structure for both players
-P{player#}: {decision node index}({actions}|{parents}|{children})
---- EXAMPLE ---
-
-P1: D1({Check,Bet}|{D2,D3}), D2({Call,Fold}|{D1}|{}), D3({Call,Fold}|{D1}|{})
-
---- END EXAMPLE ---

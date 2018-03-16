@@ -1,10 +1,11 @@
 # Poker-Visualizer
 To-do:
-- look at the "creating interactive dashboards" tutorial for HoloViews
-- fix persistent "raise2" bug
-      - REASON: holoviews won't update the dimension "raise2" until it
-        sees a new curve with a "raise2" dimension
-- investigate ndlayout format for examining multiple iterates
-- sort by lowest action per infoset
+- sorting by average sum of squared difference compared to last iterates
+  - choose how to sort the iterates
+  - whether algorithms converge to the same thing
+  - consider convergence speed of the two algorithms (comparing integrals)
+  - always put the worst first
+- develop dropdown with changing actions that are available
+- optional sub-sampling
+  - default: no sub-sampling
 - add triangles to 3-action infosets
-- compare EGT vs CFR+ alg data
