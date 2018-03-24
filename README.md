@@ -1,4 +1,8 @@
 # Poker-Visualizer
+
+USAGE:
+bokeh serve --show comp_args.py --args leduc3 P1
+
 To-do:
 - sorting by average sum of squared difference compared to last iterates
   - choose how to sort the iterates
