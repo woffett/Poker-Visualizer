@@ -18,7 +18,6 @@ class InfoSet():
         self.seqIDs = dict()
         self.probs = []
         self.grad = 0.0
-        self.alg = ''
 
 
     ##### GET methods for retrieving info set data #####

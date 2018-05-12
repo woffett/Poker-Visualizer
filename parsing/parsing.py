@@ -179,7 +179,6 @@ def addIterate(itDict, isDicts, actions):
     adds the strategy profiles for the iterate represented by itDict
     to the infosets in isDicts
     for all actions not in the infoset, add them to probs as NaN
-        - alg is the name of the algorithm
     '''
 
     strategies = itDict['strategy']
@@ -193,11 +192,10 @@ def addIterate(itDict, isDicts, actions):
     normalize(isDicts, actions)
     
 
-def getData(p1Sets, p2Sets, actions, dataFilename, alg, its=None):
+def getData(p1Sets, p2Sets, actions, dataFilename, its=None):
     '''
     extracts iterate data from dataFilename for the particular player,
     adding it to the infosets in infosetDict
-        - alg is the name of the algorithm for which we are adding data
         - if its is provided as an argument, only adds up to its number
           of iterates for each player
     '''
@@ -219,7 +217,6 @@ def getData(p1Sets, p2Sets, actions, dataFilename, alg, its=None):
 
     for infs in p1Sets.values():
         infs.getAvgGrad(min(1, int(math.ceil(GRADIENT_ITS*lim))))
-        infs.alg = alg
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
