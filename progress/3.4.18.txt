@@ -1,0 +1,5 @@
+- delete actions that aren't in the particular infoset
+- add more algorithms to compare (CFR? non-aggressive EGT?)
+- able to change the file through the web interface?
+  - or just add a command line argument
+- have one drop down for both CFR and EGT
