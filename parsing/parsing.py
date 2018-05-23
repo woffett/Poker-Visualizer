@@ -118,7 +118,8 @@ def processInfosets(filename):
 def processSeqIDs(p1Sets, p2Sets, seqFilename):
     '''
     read sequence IDs from seqFilename into p1/p2Sets
-    returns two dictionaries mapping sequence IDs to infoset names and actions
+    write mapping of sequence IDs to infoset and action names into each
+    infoset in p1Sets and p2Sets
     '''
 
     f = open(seqFilename)
@@ -146,7 +147,7 @@ def processSeqIDs(p1Sets, p2Sets, seqFilename):
         p2Sets[seqName].seqIDs[seqID] = actionName
 
 
-def alreadyAddedIt(itDict, isDicts):
+def alreadyAddedIt(itDict, isDicts, sampSize=1.0):
     '''
     returns true if the particular iterate in question has already
     been added to the infosets in isDicts
@@ -154,31 +155,54 @@ def alreadyAddedIt(itDict, isDicts):
 
     itNumber = itDict['iteration']
     randIS = isDicts.values()[0]
-    return len(randIS.probs)*10 >= itNumber
+    const = int(math.floor(sampSize**(-1)))
+    return len(randIS.probs)*const >= itNumber
 
 def normalize(isDicts, actions):
     '''
     Normalize the probabilities for the last 
-    probability distributions added to each infoset
+    probability distributions added to each infoset,
+    also adds the reach for the current iteration to
+    each infoset's reach list
     '''
 
     for infoset in isDicts.values():
         lastIt = infoset.probs[-1]
         total = sum([x for x in lastIt.values()])
         normalized = dict()
+        reach = 0.0
         for action, prob in lastIt.items():
-                normalized[action] = prob/total
+            reach += prob
+            normalized[action] = prob/total
         for action in actions:
             if action not in infoset.actions:
                 normalized[action] = -1.0
         infoset.probs[-1] = normalized
+        infoset.reach.append(reach)
+
+        
+def getReach(isDicts):
+    '''
+    Use the un-normalized probabilities in the last 
+    iterate of each infoset to calculate the
+    reach for that infoset at that iteration,
+    and append it to the appropriate infoset's reach list
+    '''
+
+    for infoset in isDicts.values():
+        lastIt = infoset.probs[-1]
+        curReach = 0.0
+        for action, prob in lastIt.items():
+            curReach += prob
+        infoset.reach.append(curReach)
     
 
-def addIterate(itDict, isDicts, actions):
+def addIterate(itDict, isDicts, actions, alg):
     '''
     adds the strategy profiles for the iterate represented by itDict
     to the infosets in isDicts
     for all actions not in the infoset, add them to probs as NaN
+    also add alg as an attribute of each infoset
     '''
 
     strategies = itDict['strategy']
@@ -188,16 +212,19 @@ def addIterate(itDict, isDicts, actions):
         for seqID, action in infoset.seqIDs.items():
             curIt[action] = strategies[seqID]
         infoset.probs.append(curIt)
+        infoset.alg = alg
 
+    getReach(isDicts)
     normalize(isDicts, actions)
     
 
-def getData(p1Sets, p2Sets, actions, dataFilename, its=None):
+def getData(p1Sets, p2Sets, actions, dataFilename, alg, its=None):
     '''
     extracts iterate data from dataFilename for the particular player,
     adding it to the infosets in infosetDict
         - if its is provided as an argument, only adds up to its number
           of iterates for each player
+    also adds alg as an attribute of each dataset
     '''
 
     f = open(dataFilename)
@@ -213,10 +240,14 @@ def getData(p1Sets, p2Sets, actions, dataFilename, its=None):
         curSets = p1Sets if curDict['player_id'] == 1 else p2Sets
         if alreadyAddedIt(curDict,curSets):
             continue
-        addIterate(curDict,curSets, actions)
+        addIterate(curDict,curSets, actions, alg)
 
     for infs in p1Sets.values():
         infs.getAvgGrad(min(1, int(math.ceil(GRADIENT_ITS*lim))))
+        
+    for infs in p2Sets.values():
+        infs.getAvgGrad(min(1, int(math.ceil(GRADIENT_ITS*lim))))
+        
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

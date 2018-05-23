@@ -9,9 +9,9 @@ args:
 2. the player infosets we want to look at
    - [P1,P2]
 3. the metric to sort the infosets by (will be adding to this!)
-   - [diff, square]
-4. the names of algorithms you want to compare
-   - [cfr_RM_la_alt,
+   - [diff, square, reachIterate=<iterateNumber>]
+4. the names of algorithms you want to compare, all w/ 500 iterates unless specified
+   - [cfr_RM_la_alt, 
       cfr_RM+_la_alt,
       cfr_RM_la_nalt,
       cfr_RM+_la_nalt,
@@ -19,8 +19,8 @@ args:
       cfr_RM+_nla_alt,
       cfr_RM_nla_nalt,
       cfr_RM+_nla_nalt,
-      strategies_egt_as, (kuhn and leduc3 only)
-      strategies_cfrplus (kuhn and leduc3 only)
+      strategies_egt_as, (kuhn and leduc3 only, 2000 iterates)
+      strategies_cfrplus (kuhn and leduc3 only, 2000 iterates)
       ]
 
 To-do:
@@ -30,16 +30,26 @@ To-do:
   - consider convergence speed of the two algorithms (comparing integrals)
   - always put the worst first
   - absolute difference of final strategies
-- develop dropdown with changing actions that are available
-- choose different algorithms other than CFR+ and EGT
 - optional sub-sampling
   - default: no sub-sampling
 - print out reach (on final iteration) of each infoset at the side?
   - if the reach is low, then divergence between algorithms doesn't even matter
   - maybe weight the ordering by the reach?
   - also print out reach rank
-- add triangles to 3-action infosets
+- fix x-axis to reflect actual iterate numbers
+- add option for log scale
+- contact Gabriele/Christian to make powerpoints of interesting results
 
-- getting rid of extraneous actions in the legend
-  - changing the selector to select from a third-party widget selector,
-    which then chooses from dynamic map
+QUESTIONS:
+- for the reach: how to calculate?
+- do we want to sort the list by reach of the infosets at each depth?
+
+Dependencies:
+- Python (2.7+ or 3.6+)
+- pycosat
+- PyYaml
+- Requests
+- Anaconda
+  - holoviews
+  - param >=1.5, <2.0
+

@@ -31,20 +31,30 @@ def diffCalc(infosetDicts,f='diff'):
         data = []
         for infosetDict in infosetDicts:
             data.append(infosetDict[infosetName])
-        arbitrary = data[0]
-        actions = arbitrary.actions
-        diff = 0.0
-        for i in range(len(data)):
-            for j in range(i+1,len(data)):
-                a1 = data[i]
-                a2 = data[j]
-                diff = 0.0
-                for iterate in range(len(a1.probs)):
-                    for curAct in actions:
-                        diff += fn((a1.probs[iterate][curAct],
-                                    a2.probs[iterate][curAct]))
 
-                a1.grad = max(a1.grad, diff)
-                a2.grad = max(a2.grad, diff)
+        if (f.startswith('reachIterate=')):
+            reachIt = int(f[len('reachIterate='):])
+            for infoset in data:
+                infoset.grad = (infoset.reach[reachIt-1] if ((reachIt-1) >= 0 and
+                                                            (reachIt-1) <
+                                                            len(infoset.reach))
+                                else infoset.reach[-1])
+                
+        else:
+            arbitrary = data[0]
+            actions = arbitrary.actions
+            diff = 0.0
+            for i in range(len(data)):
+                for j in range(i+1,len(data)):
+                    a1 = data[i]
+                    a2 = data[j]
+                    diff = 0.0
+                    for iterate in range(len(a1.probs)):
+                        for curAct in actions:
+                            diff += fn((a1.probs[iterate][curAct],
+                                        a2.probs[iterate][curAct]))
+
+                    a1.grad = max(a1.grad, diff)
+                    a2.grad = max(a2.grad, diff)
                 
         

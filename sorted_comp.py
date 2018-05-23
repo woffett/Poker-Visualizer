@@ -21,7 +21,8 @@ PLAYER = sys.argv[2] if (len(sys.argv) > 2 and sys.argv[2] in PLAYERS) else 'P1'
 GAMEFILE = 'games/%s.txt' % GAME
 GAME_SEQ = 'json/%s_sequences.json' % GAME
 SORTS = ['diff','square']
-SORT = sys.argv[3] if (len(sys.argv) > 3 and sys.argv[3] in SORTS) else 'diff'
+SORT = sys.argv[3] if ((len(sys.argv) > 3 and sys.argv[3] in SORTS) or
+                       sys.argv[3].startswith('reachIterate=')) else 'diff'
 ALGS = sys.argv[4:]
 
 renderer = hv.renderer('bokeh')

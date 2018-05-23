@@ -17,7 +17,9 @@ class InfoSet():
         self.actions = set()
         self.seqIDs = dict()
         self.probs = []
+        self.reach = []
         self.grad = 0.0
+        self.alg = ''
 
 
     ##### GET methods for retrieving info set data #####
