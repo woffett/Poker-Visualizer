@@ -73,7 +73,8 @@ def tableGenerator(p1,p2):
         '''
         iS = p1[infoset] if player == 'P1' else p2[infoset]
         label = 'Reach at iterate %d for %s' % (ITERATE, iS.alg)
-        return hv.Table(([iS.reach[ITERATE]],),[label])
+        idx = ITERATE if (0 <= ITERATE and ITERATE < len(iS.reach)) else (len(iS.reach) - 1) 
+        return hv.Table(([iS.reach[idx]],),[label])
     return genTable
 
 for curAlg in ALGS:
